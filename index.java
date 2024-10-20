@@ -4,16 +4,19 @@ class index {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int gameTurns = 0;
         char[][] board = {{' ', ' ', ' '},
                           {' ', ' ', ' '},
                           {' ', ' ', ' '}};
+
+        
+    while (true){
+        int gameTurns = 0;
         boolean[] occupiedPositions = new boolean[9]; 
 
         while (gameTurns != 9) {
             printBoard(board);
-            gameTurns++;
             playerInput(board, scanner, gameTurns, occupiedPositions);
+            gameTurns++;
 
             Character winner = determineWinner(board);
             if (winner != null) {
@@ -22,9 +25,20 @@ class index {
             } else {
                 System.out.println(winner + " wins!");
             }
+                resetBoard(board);
                 break; 
             }
         }
+
+        System.out.println("Try again? 'Yes' or 'no'.");
+        String doneOperation = scanner.nextLine().toLowerCase();
+        if (doneOperation.equals("no")){
+            cleanConsole();
+            System.out.println("Game over.");
+            return;
+        }    
+    }
+
     }
 
     public static void cleanConsole(){ 
@@ -71,7 +85,7 @@ class index {
         }
 
         public static Character determineWinner(char[][] board) {
-            
+
             for (int i = 0; i < board.length; i++) { // horizontal
                 if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != ' ') {
                     return board[i][0]; 
@@ -100,6 +114,14 @@ class index {
                 }
             }
             return 'T';
+        }
+
+        public static void resetBoard(char[][] board) {
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[i].length; j++) {
+                    board[i][j] = ' '; 
+                }
+            }
         }
         
 }
