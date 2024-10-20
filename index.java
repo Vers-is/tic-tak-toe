@@ -4,12 +4,16 @@ class index {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        int gameTurns = 0;
         char[][] board = {{' ', ' ', ' '},
                           {' ', ' ', ' '},
                           {' ', ' ', ' '}};
-        printBoard(board);
 
-        playerInput(board, scanner);
+        while (gameTurns != 9) {
+            printBoard(board);
+            gameTurns++;
+            playerInput(board, scanner, gameTurns);
+        }
 
     }
 
@@ -27,39 +31,42 @@ class index {
                    "\n"+ board[2][0]+"|"+board[2][1]+"|"+board[2][2]);
     }
 
-    public static void playerInput(char[][] board, Scanner scanner){
-        System.out.print("X's turn. Type the number to put at (1-9): ");
+    public static void playerInput(char[][] board, Scanner scanner, int gameTurns){
+
+        String turn = (gameTurns % 2 == 0) ? "O" : "X";
+
+        System.out.print(turn + "'s turn. Type the number to put at (1-9): ");
         String input = scanner.nextLine();
 
-        switch (input) {
+            switch (input) {
             case "1":
-                board[0][0]='X';
+                board[0][0]=turn.charAt(0);
                 break;
             case "2":
-                board[0][1]='X';
+                board[0][1]=turn.charAt(0);
                 break;
             case "3":
-                board[0][2]='X';
+                board[0][2]=turn.charAt(0);
                 break;
             case "4":
-                board[1][0]='X';
+                board[1][0]=turn.charAt(0);
                 break;
             case "5":
-                board[1][1]='X';
+                board[1][1]=turn.charAt(0);
                 break;
             case "6":
-                board[1][2]='X';
+                board[1][2]=turn.charAt(0);
                 break;
             case "7":
-                board[2][0]='X';
+                board[2][0]=turn.charAt(0);
                 break;
             case "8":
-                board[2][1]='X';
+                board[2][1]=turn.charAt(0);
                 break;
             case "9":
-                board[2][2]='X';
+                board[2][2]=turn.charAt(0);
                 break;
-        }
+            }
         printBoard(board);
     }
 
