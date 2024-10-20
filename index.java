@@ -8,16 +8,17 @@ class index {
         char[][] board = {{' ', ' ', ' '},
                           {' ', ' ', ' '},
                           {' ', ' ', ' '}};
+        boolean[] occupiedPositions = new boolean[9]; 
 
         while (gameTurns != 9) {
             printBoard(board);
             gameTurns++;
-            playerInput(board, scanner, gameTurns);
+            playerInput(board, scanner, gameTurns, occupiedPositions);
         }
 
     }
 
-    public static void cleanConsole(){ /// what the f-
+    public static void cleanConsole(){ 
         System.out.print("\033[H\033[2J"); 
         System.out.flush();
     }
@@ -31,44 +32,31 @@ class index {
                    "\n"+ board[2][0]+"|"+board[2][1]+"|"+board[2][2]);
     }
 
-    public static void playerInput(char[][] board, Scanner scanner, int gameTurns){
+    public static void playerInput(char[][] board, Scanner scanner, int gameTurns,
+                                   boolean[] occupiedPositions){
 
-        String turn = (gameTurns % 2 == 0) ? "O" : "X";
+            String turn = (gameTurns % 2 == 0) ? "O" : "X";
+            boolean validInput = false; 
+        
+            while (!validInput) { 
+                System.out.print(turn + "'s turn. Type the number of a cell (1-9): ");
+                String input = scanner.nextLine();
+        
+                if (input.matches("[1-9]")) {
+                    int position = Integer.parseInt(input); // making string into string
 
-        System.out.print(turn + "'s turn. Type the number to put at (1-9): ");
-        String input = scanner.nextLine();
-
-            switch (input) {
-            case "1":
-                board[0][0]=turn.charAt(0);
-                break;
-            case "2":
-                board[0][1]=turn.charAt(0);
-                break;
-            case "3":
-                board[0][2]=turn.charAt(0);
-                break;
-            case "4":
-                board[1][0]=turn.charAt(0);
-                break;
-            case "5":
-                board[1][1]=turn.charAt(0);
-                break;
-            case "6":
-                board[1][2]=turn.charAt(0);
-                break;
-            case "7":
-                board[2][0]=turn.charAt(0);
-                break;
-            case "8":
-                board[2][1]=turn.charAt(0);
-                break;
-            case "9":
-                board[2][2]=turn.charAt(0);
-                break;
+                    if (!occupiedPositions[position - 1]) { 
+                        board[(position - 1) / 3][(position - 1) % 3] = turn.charAt(0);
+                        occupiedPositions[position - 1] = true; 
+                        validInput = true; 
+                    } else {
+                        System.out.println("Cell is occupied. Try again.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Try again."); 
+                }
             }
-        printBoard(board);
-    }
-
+        
+            printBoard(board); 
+        }
 }
-  
